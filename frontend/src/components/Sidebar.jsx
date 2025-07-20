@@ -95,10 +95,10 @@ const Sidebar = ({ steps, currentStep, userProgress, onStepSelect, onClose }) =>
             Votre progression
           </h3>
           <div className="text-2xl font-bold text-blue-600">
-            {Math.round((userProgress.completedSteps.length / steps.length) * 100)}%
+            {Math.round(((userProgress.completed_steps?.length || 0) / steps.length) * 100)}%
           </div>
           <p className="text-xs text-gray-600">
-            {userProgress.completedSteps.length} sur {steps.length} étapes terminées
+            {userProgress.completed_steps?.length || 0} sur {steps.length} étapes terminées
           </p>
         </div>
       </div>
