@@ -99,7 +99,19 @@ async def get_user_progress(user_id: str):
         
         # Convert ObjectId to string
         progress["_id"] = str(progress["_id"])
+        
+        # Handle the conversion of field names (snake_case from DB to match model)
+        if "quiz_results" in progress:
+            # Convert quiz results to proper format
+            for step_id, quiz_data in progress["quiz_results"].items():
+                if isinstance(quiz_data, dict) and "timestamp" in quiz_data:
+                    # Ensure timestamp is datetime object
+                    if isinstance(quiz_data["timestamp"], str):
+                        quiz_data["timestamp"] = datetime.fromisoformat(quiz_data["timestamp"])
+        
         return UserProgress(**progress)
+    except HTTPException:
+        raise
     except Exception as e:
         logging.error(f"Error getting user progress: {e}")
         raise HTTPException(status_code=500, detail="Internal server error")
