@@ -5,10 +5,10 @@ import { cn } from '../lib/utils';
 
 const Sidebar = ({ steps, currentStep, userProgress, onStepSelect, onClose }) => {
   const getStepStatus = (stepId) => {
-    if (userProgress.completedSteps.includes(stepId)) {
+    if (userProgress.completed_steps && userProgress.completed_steps.includes(stepId)) {
       return 'completed';
     }
-    if (stepId <= userProgress.currentStep) {
+    if (stepId <= userProgress.current_step) {
       return 'available';
     }
     return 'locked';
